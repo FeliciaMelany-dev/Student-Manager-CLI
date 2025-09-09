@@ -1,5 +1,5 @@
 import { rl } from "./readlineInterface.js"; //importanto função readline para usar no meu arquivo index.js
-import { cadastroEstudantes, estudantes } from "./studentRegistration.js"; //importanto array de estudantes
+import { cadastroEstudantes, estudantes } from "./studentsFunctions.js"; //importanto array de estudantes
 
 
 const questionStudents = () =>{
@@ -12,17 +12,16 @@ const questionStudents = () =>{
                 const notas = notasStr.split(',').map(n => Number(n.trim()));
 
                 cadastroEstudantes(nome, idade, notas);
-                console.log(estudantes);
             
                 rl.question('Deseja cadastrar outro estudante? (s/n): ', answer =>{
                     if( answer === 's'){
-                        console.log('-----------------------------------------------------')
                         questionStudents();
                     };
                     rl.close()
+                    console.log(estudantes);
                 });
             });
-        });
+        });    
     });
 };
 questionStudents();
