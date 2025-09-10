@@ -13,11 +13,11 @@ export const cadastroEstudantes = (nome, idade,notas) => { // Arrow Function, fu
 }
 
 
-export const mostrarEstudante = (id = null) =>{ // Arrow fuction para mostrar todos os estudantes ou apenas o estudante cdo respectivo id
-     const encontrandoId = estudantes.find(estudante => estudante.id === id)
+export const mostrarEstudantes = (id = null) =>{ // Arrow fuction para mostrar todos os estudantes ou apenas o estudante cdo respectivo id
+     const estudanteId = estudantes.find(e => e.id === id)
     if(!id == null){
-      console.log(encontrandoId);
-    }else if(encontrandoId){
+      console.log(estudanteId);
+    }else if(estudanteId === undefined){
         console.log('Id não encontrado')
 
     }else{
@@ -25,4 +25,15 @@ export const mostrarEstudante = (id = null) =>{ // Arrow fuction para mostrar to
     }
     
 }
-mostrarEstudante();
+mostrarEstudantes();
+
+
+export const atualizarEstudante = (id, idNovo, nomeNovo, idadeNova, notasNova) =>{
+    const estudante = estudantes.find(e => e.id === id);
+    if(estudante){
+        estudante.id = idNovo;
+        estudante.nome = nomeNovo;
+        estudante.idade = idadeNova;
+        estudantes.notas = notasNova;
+    }
+}
