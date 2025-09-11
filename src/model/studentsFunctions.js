@@ -1,5 +1,5 @@
-
-export const estudantes = []; // Lista de estudantes
+import { dejesacontinuar, digitandoId } from "../controllers/Interacao.js";
+export let estudantes = []; // Lista de estudantes
 
 export const cadastroEstudantes = (nome, idade,notas) => { // Arrow Function, função para cadastrar novo estudante.
         const novoEstudante = { 
@@ -13,19 +13,29 @@ export const cadastroEstudantes = (nome, idade,notas) => { // Arrow Function, fu
 }
 
 
-export const mostrarEstudantes = (id = null) =>{ // Arrow fuction para mostrar todos os estudantes ou apenas o estudante do respectivo id
-     const estudanteId = estudantes.find(e => e.id === id) //metodo find para encontrar estudante a partir do id, caso o id venha por argumento
-    if(!id == null){ //verificando se o id não é null, assim entrando na condição.
-      console.log(estudanteId);
-
-    }else if(estudanteId === undefined){ //caso o find retorne undefined, mostra usuario não encontrado
-        console.log('Id não encontrado')
-
-    }else{ // caso o id não venha como argumento, mostrar todos os estudantes.
-        console.log(estudantes);
+export const mostrarEstudantes = () =>{ 
+    if(estudantes.length === 0){
+        console.log('Não há estudantes cadastrados.');
+        
+    }else{
+        estudantes.forEach(e =>{
+            console.log(`id: ${e.id} | nome: ${e.nome} | idade: ${e.idade}`)
+        });
     }
-    
-}
+    dejesacontinuar();
+};
+
+export const mostrarEstudantePorId = (id) =>{
+    digitandoId();
+    const aluno = estudantes.find(e => e.id === id);
+        if(aluno){
+            console.log(`id: ${aluno.id} | nome: ${aluno.nome} | idade: ${aluno.idade}`)
+        }else{
+            console.log(`Estudante com id ${aluno.id} não encontrado.`)
+        }
+    dejesacontinuar();
+};
+
 
 
 export const atualizarEstudante = (id, nomeNovo, idadeNova, notasNova) =>{ //procura estudante pelo id e passa por argumento o novo id criado
@@ -38,6 +48,7 @@ export const atualizarEstudante = (id, nomeNovo, idadeNova, notasNova) =>{ //pro
         notas: notasNova
         }
     }
+    dejesacontinuar();
     return e; // caso o estudante não seja o certo, ele devolve sem alterações.
 })
 }
@@ -46,5 +57,6 @@ export const atualizarEstudante = (id, nomeNovo, idadeNova, notasNova) =>{ //pro
 
 export const deletarEstudante = (id) =>{
     const remove = estudantes.filter(e => e.id !== id); // se o e.id for diferente do id ele coloca em um novo array, caso seja igual, ele não coloca no novo array
+    dejesacontinuar();
 
 } 

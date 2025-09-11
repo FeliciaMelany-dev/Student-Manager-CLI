@@ -1,72 +1,55 @@
 import { rl } from "../../readlineInterface.js"; //importanto função readline para usar no meu arquivo index.js
-import { cadastroEstudantes, mostrarEstudantes, atualizarEstudante, deletarEstudante } from "../model/studentsFunctions.js"; //importanto array de estudantes
+import { cadastroEstudantes, mostrarEstudantes, mostrarEstudantePorId,atualizarEstudante, deletarEstudante, estudantes } from "../model/studentsFunctions.js"; //importanto array de estudantes
 
-export const menuEstudante = () =>{ //Arrow Fuction para mostrar o menu para o meu usuário.
-    console.log('\n=== BEM-VINDO ==='); // Todos os console.log serão mostrados para o meu usuario via terminal
+export const menuEstudante = () =>{ 
+    console.log('\n=== BEM-VINDO ==='); 
     console.log('O que você deseja:');
     console.log('1 - Cadastrar um novo estudante');
     console.log('2 - Mostrar todos os estudantes');
     console.log('3 - Mostrar um estudante');
     console.log('4 - Atualizar estudante');
-    console.log('5 - Remover estudante');    
+    console.log('5 - Remover estudante');
+    console.log('6 - Sair\n');
+    interMenu();
 }
-
-export const interMenu = () => { //Função para interagi com meu usuario.
-    rl.question('Escolha uma opção:', answer =>{ // executando readline para obter a resposta do meu usuario
-        switch(answer){ // executando switch case para quando o usuario digitar uma opção, realizar a chamada da devida função.
-
-            case '1': // 
-            questionStudents(); //chama a função que interage com meu usuario pegando os dados e que chama a função de cadastro que salva o meu usuario no array.
+export const interMenu = () => { 
+    rl.question('Escolha uma opção:', answer =>{ 
+        switch(answer){ 
+            case '1': 
+            questionStudents(); 
             break;
 
             case '2':
                 mostrarEstudantes();
-                dejesacontinuar();
                 break;
 
             case '3':
-                mostrarEstudantes();
-                dejesacontinuar();
+                digitandoId();
                 break;
 
             case '4':
                 atualizarEstudante();
-                dejesacontinuar();
                 break;
 
             case '5':
                 deletarEstudante();
                 dejesacontinuar();
                 break;
-                rl.close();
-
+            case '6':
+                console.log('Saindo do programa')
+                 rl.close();
+                break;
+            default:
+                console.log('Opção inválida!');
+                menuEstudante();
         } 
         
     }
 
 )};
 
-const dejesacontinuar = () =>{
-    rl.question('Deseja continuar? (s/n) ', answer =>{
-        if(answer === 's'){
-            return menuEstudante();
-        }else if( answer == 'n'){
-            console.log('Volte sempre: :)')
-        }else{
-            rl.question('Digite a opção que deseja: '), answer =>{      
-                dejesacontinuar();
-                rl.close(); 
-            }
-
-        }
-    } 
-)};
-
-
-
-
 const questionStudents = () =>{
-    rl.question('Digite o nome do estudante: ', nome =>{
+    rl.question('\nDigite o nome do estudante: ', nome =>{
             
         rl.question('Digite a idade do estudante: ', idadeStr =>{
                 const idade = Number(idadeStr)
@@ -80,11 +63,13 @@ const questionStudents = () =>{
                     if( answer === 's'){
                         questionStudents();
                     }else if(answer === 'n'){
-                        
+                        console.log(`Processo executado com sucesso!`);
+                        const ultimoEstudante = estudantes[estudantes.length -1]
+                        console.log(`id: ${ultimoEstudante.id} Estudante: ${ultimoEstudante.nome} idade: ${ultimoEstudante.idade} cadastrado com sucesso`)
+
+                        dejesacontinuar();
                     }
-                    dejesacontinuar();
-                    rl.close()
-                    console.log(estudantes);
+
                 });
             });
         });    
@@ -92,3 +77,33 @@ const questionStudents = () =>{
 };
 
 
+
+export const dejesacontinuar = () =>{
+    rl.question('Deseja continuar? (s/n) ', answer =>{
+        const resp = answer.toLocaleLowerCase();
+        if(resp === 's'){
+            console.log('\nVoltando para o menu\n');
+            menuEstudante();
+        }else if( resp == 'n'){
+            console.log('Volte sempre: :)')
+            rl.close();
+        }else{
+            console.log('Digite novamente a opção que deseja você:');    
+            dejesacontinuar();
+            }
+
+        }
+    )};
+
+
+
+
+
+export const digitandoId= () =>{
+    console.log('\n')
+    rl.question('Digite o id do estudante: ', idString =>{
+     const id = Number(idString);
+        mostrarEstudantePorId(id);
+        rl.close();
+    }
+)};
