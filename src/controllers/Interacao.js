@@ -33,7 +33,6 @@ export const interMenu = () => {
 
             case '5':
                 deletarEstudante();
-                dejesacontinuar();
                 break;
             case '6':
                 console.log('Saindo do programa')

@@ -1,5 +1,9 @@
 import { dejesacontinuar, digitandoId } from "../controllers/Interacao.js";
-export let estudantes = []; // Lista de estudantes
+import fs from 'fs';
+
+const filePath = '../student_manager/data/estudantes.json';
+
+export let estudantes = JSON.parse(fs.readFileSync(filePath,'utf-8')) // Lista de estudantes
 
 export const cadastroEstudantes = (nome, idade,notas) => { // Arrow Function, função para cadastrar novo estudante.
         const novoEstudante = { 
@@ -8,7 +12,8 @@ export const cadastroEstudantes = (nome, idade,notas) => { // Arrow Function, fu
         idade: idade,
         notas: notas
     }
-    estudantes.push(novoEstudante) // Metódo para salvar o objeto estudante dentro do array estudantes.
+    estudantes.push(novoEstudante)
+    fs.writeFileSync(filePath, JSON.stringify(estudantes, null, 2), 'utf-8') // Metódo para salvar o objeto estudante dentro do array estudantes.
     return  estudantes // Fazendo a várivale estudante sair do bloco da função
 }
 
@@ -56,7 +61,16 @@ export const atualizarEstudante = (id, nomeNovo, idadeNova, notasNova) =>{ //pro
 
 
 export const deletarEstudante = (id) =>{
-    const remove = estudantes.filter(e => e.id !== id); // se o e.id for diferente do id ele coloca em um novo array, caso seja igual, ele não coloca no novo array
+    digitandoId();
+
+    const remove = estudantes.filter(e => e.id !== id);// se o e.id for diferente do id ele coloca em um novo array, caso seja igual, ele não coloca no novo array
+    if(remove.length == estudantes.length){
+        console.log('Estudante não encontrado');
+         dejesacontinuar();
+    }
+    fs.writeFileSync(filePath, JSON.stringify(estudantes, null, 2), 'utf-8')
+
+    console.log('Estudante removido com sucesso!');
     dejesacontinuar();
 
 } 
