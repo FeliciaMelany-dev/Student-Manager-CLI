@@ -5,12 +5,13 @@ const filePath = '../student_manager/data/estudantes.json';
 
 export let estudantes = JSON.parse(fs.readFileSync(filePath,'utf-8')) // Lista de estudantes
 
-export const cadastroEstudantes = (nome, idade,notas) => { // Arrow Function, função para cadastrar novo estudante.
+export const cadastroEstudantes = (nome, idade, notas, email) => { // Arrow Function, função para cadastrar novo estudante.
         const novoEstudante = { 
         id: Date.now(),
         nome: nome,
         idade: idade,
-        notas: notas
+        notas: notas,
+        email:email
     }
     estudantes.push(novoEstudante)
     fs.writeFileSync(filePath, JSON.stringify(estudantes, null, 2), 'utf-8') // Metódo para salvar o objeto estudante dentro do array estudantes.
@@ -24,7 +25,7 @@ export const mostrarEstudantes = () =>{
         
     }else{
         estudantes.forEach(e =>{
-            console.log(`id: ${e.id} | nome: ${e.nome} | idade: ${e.idade}`)
+            console.log(`id: ${e.id} | nome: ${e.nome} | idade: ${e.idade} | email:${e.email}`)
         });
     }
     dejesacontinuar();
@@ -61,10 +62,9 @@ export const atualizarEstudante = (id, nomeNovo, idadeNova, notasNova) =>{ //pro
 
 
 export const deletarEstudante = (id) =>{
-    digitandoId();
-
     const remove = estudantes.filter(e => e.id !== id);// se o e.id for diferente do id ele coloca em um novo array, caso seja igual, ele não coloca no novo array
     if(remove.length == estudantes.length){
+
         console.log('Estudante não encontrado');
          dejesacontinuar();
     }

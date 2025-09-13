@@ -56,19 +56,22 @@ const questionStudents = () =>{
             rl.question('Digite as notas do estudante mediante aos 4 semestres: ', notasStr =>{
                 const notas = notasStr.split(',').map(n => Number(n.trim()));
 
-                cadastroEstudantes(nome, idade, notas);
+                   rl.question('Digite o email do estudante:', email =>{
+
+                
+                    cadastroEstudantes(nome, idade, notas, email);
             
-                rl.question('Deseja cadastrar outro estudante? (s/n): ', answer =>{
-                    if( answer === 's'){
-                        questionStudents();
-                    }else if(answer === 'n'){
-                        console.log(`Processo executado com sucesso!`);
-                        const ultimoEstudante = estudantes[estudantes.length -1]
-                        console.log(`id: ${ultimoEstudante.id} Estudante: ${ultimoEstudante.nome} idade: ${ultimoEstudante.idade} cadastrado com sucesso`)
+                    rl.question('Deseja cadastrar outro estudante? (s/n): ', answer =>{
+                        if( answer === 's'){
+                            questionStudents();
+                        }else if(answer === 'n'){
+                            console.log(`Processo executado com sucesso!`);
+                            const ultimoEstudante = estudantes[estudantes.length -1]
+                            console.log(`id: ${ultimoEstudante.id} Estudante: ${ultimoEstudante.nome} idade: ${ultimoEstudante.idade} cadastrado com sucesso`)
 
-                        dejesacontinuar();
+                            dejesacontinuar();
                     }
-
+                    });
                 });
             });
         });    
