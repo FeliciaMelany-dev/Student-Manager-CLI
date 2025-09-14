@@ -1,15 +1,19 @@
 import { rl } from "../../readlineInterface.js"; //importanto função readline para usar no meu arquivo index.js
 import { cadastroEstudantes, mostrarEstudantes, mostrarEstudantePorId,atualizarEstudante, deletarEstudante, estudantes } from "../model/studentsFunctions.js"; //importanto array de estudantes
+import { mediaIndividual } from "./Caculo.js";
+
 
 export const menuEstudante = () =>{ 
     console.log('\n=== BEM-VINDO ==='); 
     console.log('O que você deseja:');
-    console.log('1 - Cadastrar um novo estudante');
+    console.log('1 - Cadastrar um novo estudante');   
     console.log('2 - Mostrar todos os estudantes');
     console.log('3 - Mostrar um estudante');
     console.log('4 - Atualizar estudante');
     console.log('5 - Remover estudante');
-    console.log('6 - Sair\n');
+    console.log('6 - Relatórios de Estudante');
+    console.log('7- Médias individual e Turma');
+    console.log('8 - Sair\n');
     interMenu();
 }
 export const interMenu = () => { 
@@ -28,13 +32,23 @@ export const interMenu = () => {
                 break;
 
             case '4':
-                digitandoId(atualizarEstudante);
+                digitandoId((id)=>{
+                    menuEditarDados(id);
+                });
                 break;
 
             case '5':
                 digitandoId(deletarEstudante);
                 break;
+
             case '6':
+                console.log("Relatório Estudantes");
+                break;
+             
+            case '7':
+                console.log('Calculos')
+                
+            case '8':
                 console.log('Saindo do programa')
                  rl.close();
                 break;
@@ -104,7 +118,9 @@ export const digitandoId= (callback) =>{
     console.log('\n')
 
     rl.question('Digite o id do estudante: ', idString =>{
+
      const id = Number(idString);
+     
      if(isNaN(id)){
         console.log("ID inválido! Digite apenas números.")
         return digitandoId(callback)
@@ -113,20 +129,54 @@ export const digitandoId= (callback) =>{
     }
 
 )};
-export const menuAtualizandoEstudante = () =>{
-    console.log("1 - Nome");
-    console.log('2 - Idade');
-    console.log("3 - Notas");
-    console.log("4 - Email");
-    atualizandoEstudante();
+
+export const menuEditarDados=(id) =>{
+    console.log('\nO que você deseja editar?');
+    console.log('1 - Nome');
+    console.log('2 - Idade ');
+    console.log('3 - Notas');
+    console.log('4 - Email');
+    editandoDados(id);
 }
 
-export const atualizandoEstudante =() =>{
-    rl.question('O que deseja atualizar:', answer =>{
-        switch(answer){
-            case '1':
-                
+  export const editandoDados = (id) =>{
+    rl.question('Escolha uma opção:', opção =>{
+    switch(opção){
+        case '1':
+            rl.question('Digite o nome:', nomeNovo =>{
+                console.log('Nome atualizado com sucesso!');
+                atualizarEstudante(id, nomeNovo);
+            });
+            break;
+        case '2':
+            rl.question('Digite a nova idade:',idadeString =>{
+                const idadeNova = Number(idadeString);
+                if(isNaN(idadeNova)){
+                    console.log('Idade inválida');
+                    return editandoDados();
+                }
+                atualizarEstudante(id, undefined, idadeNova);
+                console.log('Idade atualizada com sucesso!')
+            });
+            break;
+        case '3':
+            rl.question("Digite as novas notas:",notasString =>{
+                const notasNova = notasString.split(',').map(n => Number(n.trim()))
+                atualizarEstudante(id, undefined, undefined, notasNova);
+            });
+            break;
+        case '4':
+            rl.question('Digite o novo email:', emailNovo =>{
+                console.log('Email atualizado com sucesso!');
+                atualizarEstudante(id, undefined, undefined, undefined, emailNovo);
+            });
+            break;
 
-        }
-    })
-}
+            default:
+                console.log('Opção inválida!');
+                editandoDados();
+    }
+   }
+   );
+};
+

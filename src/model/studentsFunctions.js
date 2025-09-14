@@ -36,7 +36,7 @@ export const mostrarEstudantes = () =>{
 export const mostrarEstudantePorId = (id) =>{
     const aluno = estudantes.find(e => e.id === id);
         if(aluno){
-            console.log(`id: ${aluno.id} | nome: ${aluno.nome} | idade: ${aluno.idade}`)
+            console.log(`id: ${aluno.id} | nome: ${aluno.nome} | idade: ${aluno.idade} | notas: ${aluno.notas} | email: ${aluno.email}`)
         }else{
             console.log(`Estudante com id ${aluno.id} não encontrado.`)
         }
@@ -45,21 +45,33 @@ export const mostrarEstudantePorId = (id) =>{
 
 
 
-export const atualizarEstudante = (id, nomeNovo, idadeNova, notasNova, emailNovo) =>{ //procura estudante pelo id e passa por argumento o novo id criado
-    const estudantesAtualizados = estudantes.map(e => {//
+export const atualizarEstudante = (id, nomeNovo, idadeNova, notasNova, emailNovo) =>{ 
+
+     let estudantesAtualizados = estudantes.map(e => {
      if(e.id===id){ //se o e.id for igual a id passado no parametro execute...
         return{ // retorna para fora do bloco
             ...e, //copia todos os dados antigos
-        nome: nomeNovo,
-        idade: idadeNova,
-        notas: notasNova,
-        email: emailNovo
+        nome: nomeNovo || e.nome,
+        idade: idadeNova !== undefined ? idadeNova : e.idade,
+        notas: notasNova || e.notas,
+        email: emailNovo || e.email
         }
     }
     return e; // caso o estudante não seja o certo, ele devolve sem alterações.
 })
-fs.writeFileSync(filePathNovo, JSON.stringify(estudantesAtualizados, null, 2));
-    console.log(`Estudante atualizado com sucesso ${id} | ${nomeNovo} | ${idadeNova} | ${notasNova} | ${nomeNovo} `);
+    fs.writeFileSync(filePathNovo, JSON.stringify(estudantesAtualizados, null, 2));
+
+   const atualizado = estudantesAtualizados.find( e => e.id == id);
+   if(!atualizado){
+    console.log('Estudante não encontrado');
+    return;
+   }
+
+    console.log('Estudante atualizado com sucesso');
+
+    console.log(`\nID: ${atualizado.id} | ${atualizado.nome} | ${atualizado.idade} | ${atualizado.notas} | ${atualizado.email} `);
+
+    dejesacontinuar();
 }
 
 
