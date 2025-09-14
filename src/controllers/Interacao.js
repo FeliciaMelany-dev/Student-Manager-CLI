@@ -24,15 +24,15 @@ export const interMenu = () => {
                 break;
 
             case '3':
-                digitandoId();
+                digitandoId(mostrarEstudantePorId);
                 break;
 
             case '4':
-                atualizarEstudante();
+                digitandoId(atualizarEstudante);
                 break;
 
             case '5':
-                deletarEstudante();
+                digitandoId(deletarEstudante);
                 break;
             case '6':
                 console.log('Saindo do programa')
@@ -67,7 +67,7 @@ const questionStudents = () =>{
                         }else if(answer === 'n'){
                             console.log(`Processo executado com sucesso!`);
                             const ultimoEstudante = estudantes[estudantes.length -1]
-                            console.log(`id: ${ultimoEstudante.id} Estudante: ${ultimoEstudante.nome} idade: ${ultimoEstudante.idade} cadastrado com sucesso`)
+                            console.log(`id: ${ultimoEstudante.id} | Estudante: ${ultimoEstudante.nome} | idade: ${ultimoEstudante.idade}  | email:${ultimoEstudante.email} cadastrado com sucesso`)
 
                             dejesacontinuar();
                     }
@@ -100,12 +100,33 @@ export const dejesacontinuar = () =>{
 
 
 
-
-export const digitandoId= () =>{
+export const digitandoId= (callback) =>{
     console.log('\n')
+
     rl.question('Digite o id do estudante: ', idString =>{
      const id = Number(idString);
-        mostrarEstudantePorId(id);
-        rl.close();
+     if(isNaN(id)){
+        console.log("ID inválido! Digite apenas números.")
+        return digitandoId(callback)
+     }
+     callback(id);
     }
+
 )};
+export const menuAtualizandoEstudante = () =>{
+    console.log("1 - Nome");
+    console.log('2 - Idade');
+    console.log("3 - Notas");
+    console.log("4 - Email");
+    atualizandoEstudante();
+}
+
+export const atualizandoEstudante =() =>{
+    rl.question('O que deseja atualizar:', answer =>{
+        switch(answer){
+            case '1':
+                
+
+        }
+    })
+}
