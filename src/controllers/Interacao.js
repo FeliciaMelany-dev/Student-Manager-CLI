@@ -1,6 +1,7 @@
 import { rl } from "../../readlineInterface.js"; //importanto função readline para usar no meu arquivo index.js
 import { cadastroEstudantes, mostrarEstudantes, mostrarEstudantePorId,atualizarEstudante, deletarEstudante, estudantes } from "../model/studentsFunctions.js"; //importanto array de estudantes
-import { mediaIndividual } from "./Caculo.js";
+import { mediaIndividual, calcularMediaTurma } from "./Caculo.js";
+import { situacaoEscolarIndividual, situacaoEscolarTurma } from "./Relatorios.js";
 
 
 export const menuEstudante = () =>{ 
@@ -12,8 +13,10 @@ export const menuEstudante = () =>{
     console.log('4 - Atualizar estudante');
     console.log('5 - Remover estudante');
     console.log('6 - Relatórios de Estudante');
-    console.log('7- Médias individual e Turma');
-    console.log('8 - Sair\n');
+    console.log('7-  Relatórios da Turma');
+    console.log('8 - Média individual');
+    console.log('9 - Média da turma e Top3 melhores médias')
+    console.log('10 - Sair\n');
     interMenu();
 }
 export const interMenu = () => { 
@@ -42,16 +45,27 @@ export const interMenu = () => {
                 break;
 
             case '6':
-                console.log("Relatório Estudantes");
+                digitandoId(situacaoEscolarIndividual);
                 break;
              
             case '7':
-                console.log('Calculos')
+                digitandoId(situacaoEscolarTurma);
+                break;
+            
+            case '8': 
+                digitandoId(mediaIndividual);
+                break;
                 
-            case '8':
+                
+            case '9':
+                calcularMediaTurma();
+                break;
+            
+            case '10':
                 console.log('Saindo do programa')
                  rl.close();
                 break;
+
             default:
                 console.log('Opção inválida!');
                 menuEstudante();
@@ -83,7 +97,7 @@ const questionStudents = () =>{
                             const ultimoEstudante = estudantes[estudantes.length -1]
                             console.log(`id: ${ultimoEstudante.id} | Estudante: ${ultimoEstudante.nome} | idade: ${ultimoEstudante.idade}  | email:${ultimoEstudante.email} cadastrado com sucesso`)
 
-                            dejesacontinuar();
+                            desejaContinuar();
                     }
                     });
                 });
@@ -94,22 +108,29 @@ const questionStudents = () =>{
 
 
 
-export const dejesacontinuar = () =>{
-    rl.question('Deseja continuar? (s/n) ', answer =>{
+export const desejaContinuar = () =>{
+    return new Promise((resolve) => {
+            rl.question('Deseja continuar? (s/n) ', answer =>{
         const resp = answer.toLocaleLowerCase();
+
         if(resp === 's'){
             console.log('\nVoltando para o menu\n');
             menuEstudante();
+            resolve(true);
+
         }else if( resp == 'n'){
             console.log('Volte sempre: :)')
             rl.close();
+            resolve(false);
+
         }else{
             console.log('Digite novamente a opção que deseja você:');    
-            dejesacontinuar();
+            resolve(desejaContinuar());
             }
 
         }
-    )};
+    )});
+};
 
 
 
@@ -179,4 +200,3 @@ export const menuEditarDados=(id) =>{
    }
    );
 };
-

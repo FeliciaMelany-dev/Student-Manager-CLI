@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import { desejaContinuar } from "./Interacao.js";
 
 const filePathNovo = path.resolve('data/estudantes_atualizados.json');
 
@@ -13,20 +14,27 @@ const carregarEstudantes = () =>{
     }
 };
 
+export const calcularMediaIndividual = (estudante) =>{
+    return estudante.notas.reduce((a, b) => a +b, 0)/ estudante.notas.length
+}
+
 export const mediaIndividual = (id) =>{
     let estudantes_atualizados = carregarEstudantes();
-    estudantes_atualizados.find(e=> e.id == id);
-    if(!estudantes_atualizados){
+    const estudantesMdia = estudantes_atualizados.find(e=> e.id == id);
+    if(!estudantesMdia){
         console.log(`Estudante com ID ${id} não encontrado`);
+        desejaContinuar();
         return;
     }
-    const media = estudantes_atualizados.notas.reduce((a, b) => a+b, 0)/ estudantes_atualizados.notas.length;
+    const media = calcularMediaIndividual(estudantesMdia)
 
-    console.log(`Média de ${estudantes_atualizados.nome} (ID: ${id}): ${media.toFixed(2)}`);
+    console.log(`Média de ${estudantesMdia.nome} (ID: ${id}): ${media.toFixed(2)}`);
+    desejaContinuar();
+    return media;
 }
 
 
-export const calcularMediaTurma =() =>{
+export const calcularMediaTurma = async   () =>{
     let estudantes_atualizados = carregarEstudantes();
 
     if(estudantes_atualizados.length === 0){
@@ -34,13 +42,21 @@ export const calcularMediaTurma =() =>{
         return;
     }
     
-    const mediaTurma = estudantes_atualizados.reduce((a, b) => {
-        const somaEst = estudantes_atualizados.notas.reduce((a, n) => a + b, 0);
-        const mediaEst = somaEst/ estudantes_atualizados.notas.length;
-        return a + mediaEst;
-    }, 0)/estudantes_atualizados.length;
+    const somaMedia = estudantes_atualizados.reduce((total, estudante) => {
+        const somaEst = estudante.notas.reduce((soma, n) => soma + n, 0);
+        const mediaEst = somaEst/ estudante.notas.length;
+        return total + mediaEst;
+    }, 0)
+    const mediaTurma = somaMedia / estudantes_atualizados.length;
+
     console.log(`Média geral da turma é: ${mediaTurma.toFixed(2)}`);
+
+    listarTop3Alunos();
+
+    await desejaContinuar();
+    
     return mediaTurma;
+
 };
 
 
@@ -53,7 +69,7 @@ const listarTop3Alunos= () =>{
      }
     const estudantesComMedia = estudantes_atualizados.map(est =>({
         ...est,
-        media: mediaIndividual(est)
+        media:calcularMediaIndividual(est)
     }));
     estudantesComMedia.sort((a, b)=> b.media -a.media);
 
@@ -64,8 +80,14 @@ const listarTop3Alunos= () =>{
         let atual = estudantesComMedia[i];
         
          if(top3.length < 3 || atual.media === top3[top3.length -1]. media){
-
-         }
+            top3.push(atual);
+         }else if(top3.length < 3){
+            break;
+         };
+    };
+    console.log('\n===Top 3 melhores alunos ===');
+    top3.forEach((est, index) => {
+        console.log(`${index + 1} - ${est.nome} (ID: ${est.id}) - Média: ${est.media.toFixed(2)}`)
     }
-}     
+)};
 

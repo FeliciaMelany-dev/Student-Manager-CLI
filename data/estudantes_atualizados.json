@@ -1,7 +1,7 @@
 [
   {
     "id": 1757875722476,
-    "nome": "alicia mikaely da silva luz",
+    "nome": "Yasmim de Andrade Godeiro",
     "idade": 20,
     "notas": [
       10,
@@ -10,5 +10,29 @@
       2.5
     ],
     "email": "yasmimdeandrade@godeiro.com "
+  },
+  {
+    "id": 1757940683737,
+    "nome": "Felicia Melany da Silva Cunha",
+    "idade": 21,
+    "notas": [
+      10,
+      8,
+      7,
+      6
+    ],
+    "email": " feliciamelany@gmail.com"
+  },
+  {
+    "id": 1757940717028,
+    "nome": "Alicia Mikaely da Silva Luz",
+    "idade": 10,
+    "notas": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "email": "aliciamelanydasdj@gmail.com"
   }
 ]
