@@ -94,13 +94,16 @@ export const mostrarEstudantes = () =>{
         console.log('Não há estudantes cadastrados.');
         
     }else{
+
         estudantes.forEach(e =>{
             const atualizado = estudantes_atualizados.find(a => a.id === e.id);
             const estudantesParaMostrar = atualizado || e;
-
+            
             console.log(`id: ${estudantesParaMostrar.id} | nome: ${estudantesParaMostrar.nome} | idade: ${estudantesParaMostrar.idade} | email:${estudantesParaMostrar.email}`)
         });
     }
+    console.log('\n');
+    
     desejaContinuar();
 };
 
@@ -108,6 +111,7 @@ export const mostrarEstudantes = () =>{
 export const mostrarEstudantePorId = (id) =>{
     const estudantes_atualizados = carregarEstudantes();
     const alunoOriginal = estudantes.find(e => e.id === id);
+    console.log('\n=== MOSTRANDO ESTUDANTE ===\n')
     const alunoAtualizado = estudantes_atualizados.find(e => e.id === id);
 
     //Se houver versão atualizada, usa ela; senão, usa o original
@@ -118,6 +122,7 @@ export const mostrarEstudantePorId = (id) =>{
         }else{
             console.log(`Estudante com id ${aluno.id} não encontrado.`)
         }
+        console.log('\n')
     desejaContinuar();
 };
 
@@ -125,8 +130,10 @@ export const mostrarEstudantePorId = (id) =>{
 
 export const atualizarEstudante = (id, nomeNovo, idadeNova, notasNova, emailNovo) =>{ 
 // Cria uma nova lsita com estudantes atualizados
+    const idNumber = Number(id);
+    const estudantes_atualizados = carregarEstudantes(); 
      let estudantesAtualizados = estudantes.map(e => { //Utilizando map para retornar um array já com as alterações, sem precisar alterar o original evitando efeitos colaterais
-     if(e.id===id){ 
+     if(e.id===idNumber){ 
         return{ 
             ...e, // Copia os dados antigos
         nome: nomeNovo || e.nome,
@@ -141,13 +148,14 @@ export const atualizarEstudante = (id, nomeNovo, idadeNova, notasNova, emailNovo
     // Salva em um novo arquivo de atualização, para não sobrescrever os dados originais
     fs.writeFileSync(filePathNovo, JSON.stringify(estudantesAtualizados, null, 2));
 
-   const atualizado = estudantesAtualizados.find( e => e.id == id);
+   const atualizado = estudantesAtualizados.find( e => e.id === idNumber);
    if(!atualizado){
-    console.log('Estudante não encontrado');
+    console.log('\nEstudante não encontrado');
+    desejaContinuar();
     return;
    }
 
-    console.log('Estudante atualizado com sucesso');
+    console.log('\nEstudante atualizado com sucesso');
 
     console.log(`\nID: ${atualizado.id} | ${atualizado.nome} | ${atualizado.idade} | ${atualizado.notas} | ${atualizado.email} `);
 

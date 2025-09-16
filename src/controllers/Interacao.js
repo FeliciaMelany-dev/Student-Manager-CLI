@@ -58,7 +58,7 @@ export const interMenu = () => {
                 break;
              
             case '7':
-                digitandoId(situacaoEscolarTurma);
+                situacaoEscolarTurma();
                 break;
             
             case '8': 
@@ -71,7 +71,8 @@ export const interMenu = () => {
                 break;
             
             case '10':
-                console.log('Saindo do programa')
+                console.log('Saindo do programa...')
+                console.log('\n Volte Sempre :)')
                  rl.close(); // Fecha o programa
                 break;
 
@@ -127,13 +128,13 @@ export const desejaContinuar = () =>{
             rl.question('Deseja continuar? (s/n) ', answer =>{
         const resp = answer.toLocaleLowerCase();
 
-        if(resp === 's'){
-            console.log('\nVoltando para o menu\n');
+        if(resp === 's' || resp === 'S'){ //Caso o usuário coloque S ou N o programa continuar a execução
+            console.log('\nVoltando para o menu...');
             menuEstudante();
             resolve(true);
 
-        }else if( resp == 'n'){
-            console.log('Volte sempre: :)')
+        }else if( resp == 'n' || resp == 'N'){
+            console.log('\nVolte sempre: :)')
             rl.close();
             resolve(false);
 

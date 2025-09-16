@@ -83,6 +83,7 @@ export const carregarEstudantes = () =>{
         return;
     }
     console.log("\n=== Relatório da Turma ===");
+
     estudantes_atualizados.forEach(estudante => {
         const media = calcularMediaIndividual(estudante);
         if(media >= 7.0){
@@ -93,7 +94,8 @@ export const carregarEstudantes = () =>{
     console.log(`Notas: ${estudante.notas.join(', ')}`);
     console.log(`Média: ${media.toFixed(2)}`);
     console.log(`Status: Aprovado`);
-    desejaContinuar();
+
+        console.log('\n');
 
      }else if(media<6.9 && media>=5.0){
             
@@ -103,7 +105,8 @@ export const carregarEstudantes = () =>{
     console.log(`Notas: ${estudante.notas.join(', ')}`);
     console.log(`Média: ${media.toFixed(2)}`);
     console.log(`Status: Recuperação`);
-    desejaContinuar();
+        console.log('\n');
+
      }else if(media<5){
             
     console.log(`\n=== Relatório do Estudante ===`);
@@ -112,10 +115,10 @@ export const carregarEstudantes = () =>{
     console.log(`Notas: ${estudante.notas.join(', ')}`);
     console.log(`Média: ${media.toFixed(2)}`);
     console.log(`Status: Reprovado`);
-    desejaContinuar();
      }
+     console.log('\n');
+});
+    desejaContinuar();
+};
 
-
- }
- )};
 

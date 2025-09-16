@@ -1,38 +1,26 @@
 [
   {
-    "id": 1757875722476,
-    "nome": "Yasmim de Andrade Godeiro",
-    "idade": 20,
-    "notas": [
-      10,
-      5,
-      10,
-      2.5
-    ],
-    "email": "yasmimdeandrade@godeiro.com "
-  },
-  {
-    "id": 1757940683737,
-    "nome": "Felicia Melany da Silva Cunha",
+    "id": 1758027165738,
+    "nome": "felicia melany da silva cunha",
     "idade": 21,
     "notas": [
       10,
+      9.5,
       8,
-      7,
-      6
+      7.5
     ],
-    "email": " feliciamelany@gmail.com"
+    "email": "feliciamelany@gmail.com"
   },
   {
-    "id": 1757940717028,
-    "nome": "Alicia Mikaely da Silva Luz",
-    "idade": 10,
+    "id": 1758027929184,
+    "nome": " Yasmi de Andrade Godeiro",
+    "idade": 21,
     "notas": [
       10,
       10,
       10,
       10
     ],
-    "email": "aliciamelanydasdj@gmail.com"
+    "email": "FELICIAMELANY@GMAIL.COM"
   }
 ]

@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { desejaContinuar } from "./Interacao.js";
+import { log } from "console";
 
 //Caminho absoluto do arquivo onde ficam os estudantes atualizados
 const filePathNovo = path.resolve('data/estudantes_atualizados.json');
