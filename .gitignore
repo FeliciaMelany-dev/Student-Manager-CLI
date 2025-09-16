@@ -1,0 +1,26 @@
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos de build (caso tenha)
+dist/
+build/
+
+# Configurações do VSCode
+.vscode/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Persistência local dos estudantes (não subir dados reais)
+data/*.json
+data/*.json
+
+# Arquivos temporários
+*.tmp
+*.swp
