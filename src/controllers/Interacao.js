@@ -1,9 +1,16 @@
-import { rl } from "../../readlineInterface.js"; //importanto função readline para usar no meu arquivo index.js
-import { cadastroEstudantes, mostrarEstudantes, mostrarEstudantePorId,atualizarEstudante, deletarEstudante, estudantes } from "../model/studentsFunctions.js"; //importanto array de estudantes
+// Importa a interfacce readline para capturar entradas do usuário via terminal
+import { rl } from "../../readlineInterface.js"; 
+
+// Importa as funções que manipulam os estudantes (CRUD e array principal)
+import { cadastroEstudantes, mostrarEstudantes, mostrarEstudantePorId,atualizarEstudante, deletarEstudante, estudantes } from "../model/studentsFunctions.js"; 
+
+//Importa funções de cálculo de édias
 import { mediaIndividual, calcularMediaTurma } from "./Caculo.js";
+
+// Importa funções de relatórios (situação escolar por aluno e por turma)
 import { situacaoEscolarIndividual, situacaoEscolarTurma } from "./Relatorios.js";
 
-
+// Exibe o menu principal ccom as opções disponíveis
 export const menuEstudante = () =>{ 
     console.log('\n=== BEM-VINDO ==='); 
     console.log('O que você deseja:');
@@ -17,13 +24,15 @@ export const menuEstudante = () =>{
     console.log('8 - Média individual');
     console.log('9 - Média da turma e Top3 melhores médias')
     console.log('10 - Sair\n');
-    interMenu();
-}
+    interMenu(); // Chama o submenu que captura a escolha do usuário
+};
+
+// Captura a escolha do usuário e redireciona para a função correspondente.
 export const interMenu = () => { 
     rl.question('Escolha uma opção:', answer =>{ 
         switch(answer){ 
             case '1': 
-            questionStudents(); 
+            questionStudents(); //Cadastro de estudante
             break;
 
             case '2':
@@ -31,17 +40,17 @@ export const interMenu = () => {
                 break;
 
             case '3':
-                digitandoId(mostrarEstudantePorId);
+                digitandoId(mostrarEstudantePorId); // Buscar por ID
                 break;
 
             case '4':
                 digitandoId((id)=>{
-                    menuEditarDados(id);
+                    menuEditarDados(id); //Atualizar dados
                 });
                 break;
 
             case '5':
-                digitandoId(deletarEstudante);
+                digitandoId(deletarEstudante); // Deleta estudante pelo ID
                 break;
 
             case '6':
@@ -63,18 +72,19 @@ export const interMenu = () => {
             
             case '10':
                 console.log('Saindo do programa')
-                 rl.close();
+                 rl.close(); // Fecha o programa
                 break;
 
             default:
                 console.log('Opção inválida!');
-                menuEstudante();
+                menuEstudante(); // Retorna ao menu
         } 
         
     }
 
 )};
 
+// Perggunta ao usuário os dados de um novo estudante e cadastra
 const questionStudents = () =>{
     rl.question('\nDigite o nome do estudante: ', nome =>{
             
@@ -86,19 +96,23 @@ const questionStudents = () =>{
 
                    rl.question('Digite o email do estudante:', email =>{
 
-                
+                    // Cadastra o estudante
                     cadastroEstudantes(nome, idade, notas, email);
-            
+                    
+                    // Pergunta se deseja cadastrar outro
                     rl.question('Deseja cadastrar outro estudante? (s/n): ', answer =>{
                         if( answer === 's'){
-                            questionStudents();
+                            questionStudents(); //Recursão -> chama de novo para cadastrar outro
+
                         }else if(answer === 'n'){
                             console.log(`Processo executado com sucesso!`);
+
+                            // Mostra o último estudante cadastro
                             const ultimoEstudante = estudantes[estudantes.length -1]
                             console.log(`id: ${ultimoEstudante.id} | Estudante: ${ultimoEstudante.nome} | idade: ${ultimoEstudante.idade}  | email:${ultimoEstudante.email} cadastrado com sucesso`)
 
                             desejaContinuar();
-                    }
+                    };
                     });
                 });
             });
@@ -107,7 +121,7 @@ const questionStudents = () =>{
 };
 
 
-
+// Pergunta se o usuário quer continuar ou encerrar o programa
 export const desejaContinuar = () =>{
     return new Promise((resolve) => {
             rl.question('Deseja continuar? (s/n) ', answer =>{
@@ -125,7 +139,7 @@ export const desejaContinuar = () =>{
 
         }else{
             console.log('Digite novamente a opção que deseja você:');    
-            resolve(desejaContinuar());
+            resolve(desejaContinuar()); // Recursão para validar entrada
             }
 
         }
@@ -134,7 +148,7 @@ export const desejaContinuar = () =>{
 
 
 
-
+// Captura o ID digitado e chama o callback ccorrespondente
 export const digitandoId= (callback) =>{
     console.log('\n')
 
@@ -144,13 +158,14 @@ export const digitandoId= (callback) =>{
      
      if(isNaN(id)){
         console.log("ID inválido! Digite apenas números.")
-        return digitandoId(callback)
+        return digitandoId(callback) // Reforça a entrada correta
      }
      callback(id);
     }
 
 )};
 
+// Mostra o menu de edição dos dados do estudante
 export const menuEditarDados=(id) =>{
     console.log('\nO que você deseja editar?');
     console.log('1 - Nome');
@@ -160,6 +175,7 @@ export const menuEditarDados=(id) =>{
     editandoDados(id);
 }
 
+// Recebe a escolha e executa a atualização correspondente
   export const editandoDados = (id) =>{
     rl.question('Escolha uma opção:', opção =>{
     switch(opção){
@@ -195,7 +211,7 @@ export const menuEditarDados=(id) =>{
 
             default:
                 console.log('Opção inválida!');
-                editandoDados();
+                editandoDados(id); // Reforça a entrafa válida
     }
    }
    );
