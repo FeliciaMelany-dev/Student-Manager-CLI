@@ -21,6 +21,6 @@ Thumbs.db
 data/*.json
 data/*.json
 
-# Arquivos temporários
+# Arquivos temporários:
 *.tmp
 *.swp
