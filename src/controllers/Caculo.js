@@ -2,18 +2,22 @@ import path from "path";
 import fs from "fs";
 import { desejaContinuar } from "./Interacao.js";
 
+//Caminho absoluto do arquivo onde ficam os estudantes atualizados
 const filePathNovo = path.resolve('data/estudantes_atualizados.json');
 
+/*Função para carregar os estudantes do arquivo JSON atualizado.
+* Se não conseguir ler o arquivo, retorna um array vazio */
 const carregarEstudantes = () =>{
     try{
-        const data = fs.readFileSync(filePathNovo, 'utf-8');
-        return JSON.parse(data)
+        const data = fs.readFileSync(filePathNovo, 'utf-8'); // Lê o conteúdo do array
+        return JSON.parse(data) // Converte de texto JSON para array de objeto
     }catch (err){
         console.log('Erro ao ler o arquivo de estudantes:', err);
         return[];
     }
 };
 
+// Função para calcular a média individual dde um estudante
 export const calcularMediaIndividual = (estudante) =>{
     return estudante.notas.reduce((a, b) => a +b, 0)/ estudante.notas.length
 }
