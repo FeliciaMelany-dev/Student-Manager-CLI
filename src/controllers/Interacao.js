@@ -78,7 +78,7 @@ export const interMenu = () => {
 
             default:
                 console.log('Opção inválida!');
-                menuEstudante(); // Retorna ao menu
+                menuEstudante(); // Retorna ao menu.
         } 
         
     }

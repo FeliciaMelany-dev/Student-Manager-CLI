@@ -95,7 +95,7 @@ const listarTop3Alunos= () =>{
     const top3 = [];
     let rank = 1;
 
-// Percorre a lista até pegar os 3 primeiros (ou mais, caso de empate)
+// Percorre a lista até pegar os 3 primeiros (ou mais, caso de empate.)
 
     for(let i = 0; i <estudantesComMedia.length && top3.length <3; i++){
         let atual = estudantesComMedia[i];

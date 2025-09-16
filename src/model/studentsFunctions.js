@@ -86,7 +86,7 @@ export const cadastroEstudantes = (nome, idade, notas, email) => {
     return  estudantes // Retorna a lista atualizada
 };
 
-// Mostra todos os estudantes (base + atualizações feitas em outro arquivo JSON, mantendo histórico original)
+// Mostra todos os estudantes (base + atualizações feitas em outro arquivo JSON, mantendo histórico original.)
 export const mostrarEstudantes = () =>{ 
     const estudantes_atualizados = carregarEstudantes();
 

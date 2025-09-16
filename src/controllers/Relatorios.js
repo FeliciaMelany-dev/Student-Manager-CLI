@@ -2,7 +2,7 @@
 import path from "path"; // Manipulação de caminhos de arquivos/diretórios
 import fs from "fs"; // Leitura e escrita de arquivos
 
-// Importa funções criadas em outros arquivos
+// Importa funções criadas em outros arquivos.
 import { calcularMediaIndividual} from "./Caculo.js";
 import {desejaContinuar} from "./Interacao.js";
 

@@ -2,7 +2,7 @@
 
 Um sistema de **gerenciamento de estudantes** feito em **Node.js** com persistência em **JSON**, que roda diretamente no terminal (linha de comando).  
 
-Permite **cadastrar, listar, atualizar, deletar e gerar relatórios de estudantes** com base em suas informações e notas.  
+Permite **cadastrar, listar, atualizar, deletar e gerar relatórios de estudantes** com base em suas informações e notas entregue.  
 
 ---
 
